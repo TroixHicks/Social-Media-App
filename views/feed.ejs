@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+    <title>21 Savage Fan Site</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+
+    <div class="page-header text-center">
+        <h1>Feed</h1>
+        <a href="/profile">Profile</a>
+        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+    </div>
+
+    <div class="row">
+
+       
+        <div class="col-sm-6">
+          <h3>Posts</h3>
+          <ul class="messages">
+          <% for(var i=0; i<posts.length; i++) {%>
+            <li class="message">
+              <a  href="/post/<%= posts[i]._id %>">
+                <h4><%= posts[i].caption %></h4>
+                <img src="<%= posts[i].img %>" alt="">
+                <a class="hide" href="/page/<%= posts[i].postedBy %>"> <%= posts[i].postedBy %></a>
+              </a>  
+              <span class="bob"><%= posts[i].thumbUp %></span>
+              <span><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>
+              <span><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>
+              <% if (user.local.email) { %>
+                <form action="/post/comments/<%= posts[i]._id %>" method="POST">
+                  <input type="text" placeholder="comment" name="comment">
+                  <button type="submit">Submit</button>
+                </form>
+              <% } %>
+             
+              <ul>
+                <% const currentPost = posts[i]%>
+                <% for(var j=0; j<currentPost.comments.length; j++) {%> 
+                <li class="comments">
+                  <span><%=currentPost.comments[j].comment%></span>
+                </li>
+              
+              <% } %>
+              </ul>
+              
+            </li>
+          <% } %>
+          </ul>
+
+
+</div>
+
+<script src="main.js"></script>
+
+</body>
+</html>
